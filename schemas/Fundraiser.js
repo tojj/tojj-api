@@ -10,4 +10,4 @@ let fundraiserSchema = new Schema({
 
 
 
-module.exports = global.db.model("Fundraiser", fundraiserSchema)
+module.exports = mongoose.model("Fundraiser", fundraiserSchema)

@@ -9,4 +9,4 @@ let productSchema = new Schema({
   image: { type: String, required: true, unique: true }
 })
 
-module.exports = global.db.model("Product", productSchema)
+module.exports = mongoose.model("Product", productSchema)

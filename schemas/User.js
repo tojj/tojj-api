@@ -19,4 +19,4 @@ userSchema.pre("save", async function () {
 
 })
 
-module.exports = global.db.model("User", userSchema) 
+module.exports = mongoose.model("User", userSchema) 

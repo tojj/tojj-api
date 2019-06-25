@@ -3,7 +3,10 @@ const bodyParser = require('body-parser')
 const app = express()
 const connectToDb = require('./config/db')
 const config = require('./config/config')
-const routes = require('./API/routes')
+const userRoutes = require('./API/userRoutes')
+const qnaRoutes = require('./API/qnaRoutes')
+const fundraiserRoutes = require('./API/fundraiserRoutes')
+const productRoutes = require('./API/productRoutes')
 
 const TojjServer = () => {
   app.get('/', (req, res) => res.send('Welcome To Tojj Server'))
@@ -12,7 +15,10 @@ const TojjServer = () => {
 }
 
 app.use(bodyParser.json());
-app.use(routes)
+app.use(userRoutes, 
+  qnaRoutes, 
+  fundraiserRoutes, 
+  productRoutes)
 
 connectToDb()
 TojjServer()

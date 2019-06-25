@@ -8,4 +8,4 @@ let qnaSchema = new Schema({
   category: { type: String, required: true }
 })
 
-module.exports = global.db.model("Qna", qnaSchema)
+module.exports = mongoose.model("Qna", qnaSchema)
