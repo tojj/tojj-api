@@ -17,11 +17,11 @@ router.get('/api/qna', async (req, res) => {
  * Fetch specific limited amount of Qnas
  */
 router.get('/api/qna/sorted', (req, res) => {
-  const limit = req.query.limit ? parseInt(req.query.limit,10) : 5
-  const Faq = Qna.find().limit(limit).sort({counter: -1}).exec()
-  .then(data => {
-    res.status(200).send(data)
-  })
+  const limit = req.query.limit ? parseInt(req.query.limit, 10) : 5
+  const Faq = Qna.find().limit(limit).sort({ counter: -1 }).exec()
+    .then(data => {
+      res.status(200).send(data)
+    })
 })
 
 /**
@@ -38,8 +38,16 @@ router.get('/api/qna/first', (req, res) => {
 /**
  * Create new qna
  */
-router.post('/api/qna', (req,res) => {
-  
+router.post('/api/qna', (req, res) => {
+  const qna = new Qna(req.body.content)
+  qna.save(function (err) {
+    if (err) {
+      next(err)
+    } else {
+      res.status(200).send();
+      console.log(qna, 'SAVED')
+    }
+  })
 })
 
 /**
@@ -47,8 +55,26 @@ router.post('/api/qna', (req,res) => {
  */
 router.get('/api/qna/id/:id', (req, res) => {
   const qna = Qna.findById(req.params.id)
-  .then(data => {
-    res.status(200).send(data)
+    .then(data => {
+      res.status(200).send(data)
+    })
+})
+
+/** 
+ * Edit one qna
+ */
+router.put('/api/qna/id/:id/edit', async (req, res) => {
+  let qna = await Qna.findById(req.params.id)
+  qna.counter = req.body.content.counter
+  qna.question = req.body.content.question
+  qna.answer = req.body.content.answer
+  qna.category = req.body.content.category
+  qna.save(function (err) {
+    if (err) {
+      next(err)
+    } else {
+      res.status(200).send()
+    }
   })
 })
 

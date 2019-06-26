@@ -25,6 +25,21 @@ router.get('/api/fundraisers/first', (req, res) => {
 })
 
 /**
+ * Create new fundraiser
+ */
+router.post('/api/fundraisers', (req, res) => {
+  const fundraiser = new Fundraiser(req.body.content)
+  fundraiser.save(function (err) {
+    if (err) {
+      next(err)
+    } else {
+      res.status(200).send();
+      console.log(fundraiser, 'SAVED')
+    }
+  })
+})
+
+/**
  * Fetch one fundraiser by id
  */
 router.get('/api/fundraisers/id/:id', (req, res) => {
@@ -34,8 +49,26 @@ router.get('/api/fundraisers/id/:id', (req, res) => {
   })
 })
 
+/** 
+ * Edit one Fundraiser
+ */
+router.put('/api/fundraisers/id/:id/edit', async (req, res) => {
+  let fundraiser = await Fundraiser.findById(req.params.id)
+  fundraiser.name = req.body.content.name
+  fundraiser.desc = req.body.content.desc
+  fundraiser.image = req.body.content.image
+  fundraiser.link = req.body.content.link
+  fundraiser.save(function (err) {
+    if (err) {
+      next(err)
+    } else {
+      res.status(200).send()
+    }
+  })
+})
+
 /**
- * Remove one qna by id
+ * Remove one fundraiser by id
  */
 router.delete('/api/fundraisers/id/:id/delete', async (req, res) => {
   const fundraiser = await Fundraiser.findById(req.params.id)
