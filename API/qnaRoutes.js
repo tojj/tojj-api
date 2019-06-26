@@ -17,8 +17,9 @@ router.get('/api/qna', async (req, res) => {
  * Fetch specific limited amount of Qnas
  */
 router.get('/api/qna/sorted', (req, res) => {
-  const limit = req.query.limit ? parseInt(req.query.limit, 10) : 5
-  const Faq = Qna.find().limit(limit).sort({ counter: -1 }).exec()
+  const limit = req.query.limit ? parseInt(req.query.limit, 10) : null
+  let category = req.query.category
+  const Faq = Qna.find(category ? {"category": category} : null).limit(limit).sort({ counter: -1 }).exec()
     .then(data => {
       res.status(200).send(data)
     })

@@ -14,14 +14,25 @@ router.get('/api/events', async (req, res) => {
 })
 
 /**
+ * All events with population
+ */
+router.get('/api/events/populated', (req, res) => {
+  const Faq = Event.find().populate("product").populate("fundraiser").exec()
+    .then(data => {
+      res.status(200).send(data)
+    })
+})
+
+
+/**
  * Get first event
  */
 router.get('/api/events/first', (req, res) => {
   const event = Event.findOne({})
-  .exec()
-  .then(data => {
-    res.status(200).send(data)
-  })
+    .exec()
+    .then(data => {
+      res.status(200).send(data)
+    })
 })
 
 /** 
@@ -61,11 +72,12 @@ router.put('/api/events/id/:id/edit', async (req, res) => {
  */
 router.get('/api/events/id/:id', (req, res) => {
   const event = Event.findById(req.params.id)
-  .exec()
-  .then(data => {
-    res.status(200).send(data)
-  })
+    .exec()
+    .then(data => {
+      res.status(200).send(data)
+    })
 })
+
 
 /**
  * Delete an event
