@@ -39,7 +39,5 @@ app.use(userRoutes,
   loginRoutes
 )
 
-// app.use(express.static(path.join(__dirname, 'build')));
-
 app.listen(config.PORT, () => console.log(`Tojj Server is on port ${config.PORT}`))
 
