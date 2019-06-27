@@ -7,7 +7,6 @@ router.get('/api/users', async (req, res) => {
     .exec()
     .then(user => {
       if (user !== null) {
-        console.log(user);
         res.json(user);
       } else {
         res.sendStatus(404);
