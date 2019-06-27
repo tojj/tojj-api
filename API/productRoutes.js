@@ -25,12 +25,47 @@ router.get('/api/products/first', (req, res) => {
 })
 
 /**
+ * Create new product
+ */
+router.post('/api/products', (req, res) => {
+  const product = new Product(req.body.content)
+  product.save(function (err) {
+    if (err) {
+      next(err)
+    } else {
+      res.status(200).send();
+      console.log(product, 'SAVED')
+    }
+  })
+})
+
+
+/**
  * Fetch one product by id
  */
 router.get('/api/products/id/:id', (req, res) => {
   const product = Product.findById(req.params.id)
   .then(data => {
     res.status(200).send(data)
+  })
+})
+
+/** 
+ * Edit one Product
+ */
+router.put('/api/products/id/:id/edit', async (req, res) => {
+  let product = await Product.findById(req.params.id)
+  product.name = req.body.content.name
+  product.price = req.body.content.price
+  product.desc = req.body.content.desc
+  product.image = req.body.content.image
+  product.link = req.body.content.link
+  product.save(function (err) {
+    if (err) {
+      next(err)
+    } else {
+      res.status(200).send()
+    }
   })
 })
 
