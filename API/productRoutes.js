@@ -30,6 +30,9 @@ router.get('/api/products/first', (req, res) => {
  */
 router.post('/api/products', (req, res) => {
   const product = new Product(req.body.content)
+  if(product.image === ''){
+    product.image = '/images/present.png'
+  }
   product.save(function (err) {
     if (err) {
       next(err)
@@ -59,7 +62,11 @@ router.put('/api/products/id/:id/edit', async (req, res) => {
   product.name = req.body.content.name
   product.price = req.body.content.price
   product.desc = req.body.content.desc
-  product.image = req.body.content.image
+  if(product.image === ''){
+    product.image = '/images/present.png'
+  } else {
+    product.image = req.body.content.image
+  }
   product.link = req.body.content.link
   product.save(function (err) {
     if (err) {
