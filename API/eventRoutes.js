@@ -99,6 +99,7 @@ router.get('/api/events/first', (req, res) => {
  */
 router.put('/api/events/id/:id/edit', async (req, res) => {
   let event = await Event.findById(req.params.id)
+  event.attending = req.body.content.attending
   event.title = req.body.content.title
   event.child = req.body.content.child
   event.age = req.body.content.age
