@@ -1,6 +1,7 @@
 const express = require('express')
-const router = express.Router()
 const Qna = require('../schemas/Qna')
+
+const router = express.Router()
 
 /**
  * Fetch all availale Qnas

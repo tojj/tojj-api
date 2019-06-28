@@ -1,10 +1,11 @@
 const express = require('express')
-const router = express.Router()
 const bcrypt = require('bcrypt')
 const User = require('../schemas/User')
 const {salt} = require('../config/settings.json')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')(session);
+
+const router = express.Router()
 
 router.post('/api/login', async (req, res) => {
   let data = req.body.data

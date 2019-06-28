@@ -1,6 +1,7 @@
 const express = require('express')
-const router = express.Router()
 const Product = require('../schemas/Product')
+
+const router = express.Router()
 
 /**
  * Get all products

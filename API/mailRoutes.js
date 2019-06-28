@@ -1,7 +1,8 @@
 const express = require('express')
-const router = express.Router()
 const nodemailer = require('nodemailer')
 const { mail } = require('../config/config');
+
+const router = express.Router()
 
 router.post('/api/send', function (req, res, next) {
   const transporter = nodemailer.createTransport({

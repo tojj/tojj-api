@@ -1,6 +1,7 @@
 const express = require('express')
-const router = express.Router()
 const Event = require('../schemas/Event')
+
+const router = express.Router()
 
 /**
  * Fetch all availale Events
