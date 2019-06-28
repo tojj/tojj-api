@@ -36,7 +36,8 @@ let eventSchema = new Schema({
     address:     { type: String },
     zipcode:     { type: String },
     city:        { type: String },
-  }
+  },
+  password:      { type: String, required: true }
 })
 
 module.exports = mongoose.model("Event", eventSchema)

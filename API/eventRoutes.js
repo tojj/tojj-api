@@ -70,8 +70,8 @@ router.post('/api/events', (req, res) => {
       address: req.body.guestUser.address,
       zipcode: req.body.guestUser.zipcode,
       city: req.body.guestUser.city
-
-    }
+    },
+    password: req.body.password
   })
   qna.save(function (err) {
     if (err) {
@@ -100,6 +100,7 @@ router.get('/api/events/first', (req, res) => {
  */
 router.put('/api/events/id/:id/edit', async (req, res) => {
   let event = await Event.findById(req.params.id)
+  event.password = req.body.content.password
   event.attending = req.body.content.attending
   event.title = req.body.content.title
   event.child = req.body.content.child
