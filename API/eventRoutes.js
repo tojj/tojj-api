@@ -1,13 +1,18 @@
 const express = require('express')
+const bcrypt = require('bcrypt')
+
+const { salt } = require('../config/settings.json')
 const Event = require('../schemas/Event')
+const Fundraiser = require('../schemas/Fundraiser')
 
 const router = express.Router()
 
 /**
  * Fetch all availale Events
  */
+
 router.get('/api/events', async (req, res) => {
-  const events = Event.find({})
+  Event.find({})
     .exec()
     .then(data => {
       res.status(200).send(data)
@@ -18,17 +23,31 @@ router.get('/api/events', async (req, res) => {
  * All events with population
  */
 router.get('/api/events/populated', (req, res) => {
-  const Faq = Event.find().populate("product").populate("fundraiser").exec()
+  Event.find().populate("product").populate("fundraiser").exec()
+    .then(data => {
+      res.status(200).send(data)
+    })
+})
+
+
+
+/**
+ * Find one populated event with eventlink
+ */
+router.get('/api/events/populated/:eventlink', (req, res) => {
+  Event.findOne({ "link": req.params.eventlink }).populate("product").populate("fundraiser").exec()
     .then(data => {
       res.status(200).send(data)
     })
 })
 
 /**
- * Find one populated event with eventlink
+ * Find one by link and compare input with event password - return true if match
  */
-router.get('/api/events/populated/:eventlink', (req, res) => {
-  const Faq = Event.findOne({ "link": req.params.eventlink }).populate("product").populate("fundraiser").exec()
+
+router.get('/api/events/populated/:eventlink/login', async (req, res) => {
+  const event = await Event.findOne({ "link": req.params.eventlink }).exec()
+  bcrypt.compare(req.query.input + salt, event.password)
     .then(data => {
       res.status(200).send(data)
     })
@@ -37,8 +56,9 @@ router.get('/api/events/populated/:eventlink', (req, res) => {
 /**
  * Creates an event
  */
-router.post('/api/events', (req, res) => {
-  const qna = new Event({
+router.post('/api/events', async (req, res) => {
+  const firstFundraiser = await Fundraiser.findOne({}).exec()  
+  const event = new Event({
     title: req.body.title,
     child: req.body.child,
     age: req.body.age,
@@ -57,7 +77,7 @@ router.post('/api/events', (req, res) => {
       color: "#4762b7"
     },
     donate: req.body.donate,
-    fundraiser: req.body.fundraiser,
+    fundraiser: req.body.fundraiser ? req.body.fundraiser : firstFundraiser._id,
     attending: [],
     product: req.body.product,
     link: req.body.link,
@@ -73,13 +93,13 @@ router.post('/api/events', (req, res) => {
     },
     password: req.body.password
   })
-  qna.save(function (err) {
+  event.save(function (err) {
     if (err) {
       console.log(err)
       next(err)
     } else {
       res.status(200).send();
-      console.log(qna, 'SAVED')
+      console.log(event, 'SAVED')
     }
   })
 })
@@ -88,12 +108,15 @@ router.post('/api/events', (req, res) => {
  * Get first event
  */
 router.get('/api/events/first', (req, res) => {
-  const event = Event.findOne({})
+  Event.findOne({})
     .exec()
     .then(data => {
       res.status(200).send(data)
     })
 })
+
+
+
 
 /** 
  * Edit one Event

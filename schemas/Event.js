@@ -1,5 +1,7 @@
 const mongoose = require("mongoose")
 const Schema = mongoose.Schema
+const bcrypt = require('bcrypt')
+const { salt } = require('../config/settings.json')
 
 let eventSchema = new Schema({
 
@@ -16,9 +18,9 @@ let eventSchema = new Schema({
     city:     { type: String, required: true }
   },
   swish: {
-    number:   { type: String, required: true },
-    amount:   { type: String, required: true },
-    color:    { type: String, required: true },
+    number:   { type: Number },
+    amount:   { type: String },
+    color:    { type: String },
 
   },
   donate:     { type: Boolean },
@@ -39,5 +41,10 @@ let eventSchema = new Schema({
   },
   password:      { type: String, required: true }
 })
+
+eventSchema.pre('save', async function(){
+  // here we replace the password with the encrypted password
+  this.password = await bcrypt.hash(this.password + salt, 10);
+});
 
 module.exports = mongoose.model("Event", eventSchema)
