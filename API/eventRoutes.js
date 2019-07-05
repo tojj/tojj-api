@@ -47,6 +47,9 @@ router.get('/api/events/populated/:eventlink', (req, res) => {
 
 router.get('/api/events/populated/:eventlink/login', async (req, res) => {
   const event = await Event.findOne({ "link": req.params.eventlink }).exec()
+  if(!event){
+    return res.status(200).send(false)
+  }
   bcrypt.compare(req.query.input + salt, event.password)
     .then(data => {
       res.status(200).send(data)

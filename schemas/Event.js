@@ -20,8 +20,6 @@ let eventSchema = new Schema({
   swish: {
     number:   { type: Number },
     amount:   { type: String },
-    color:    { type: String },
-
   },
   donate:     { type: Boolean },
   attending:  { type: Array },
@@ -44,7 +42,9 @@ let eventSchema = new Schema({
 
 eventSchema.pre('save', async function(){
   // here we replace the password with the encrypted password
+  if(this.password.length < 40){
   this.password = await bcrypt.hash(this.password + salt, 10);
-});
+  }
+})
 
 module.exports = mongoose.model("Event", eventSchema)
