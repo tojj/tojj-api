@@ -69,6 +69,7 @@ router.post('/api/events', async (req, res) => {
     desc: req.body.desc,
     date: req.body.date,
     rsvp: req.body.rsvp,
+    rsvpSent: false,
     location: {
       street: req.body.location.street,
       zipcode: req.body.location.zipcode,
@@ -77,7 +78,7 @@ router.post('/api/events', async (req, res) => {
     swish: {
       number: "0708358158",
       amount: req.body.swish.amount,
-      color: "#4762b7"
+      color: "#6C80C5"
     },
     donate: req.body.donate,
     fundraiser: req.body.fundraiser ? req.body.fundraiser : firstFundraiser._id,
@@ -135,6 +136,7 @@ router.put('/api/events/id/:id/edit', async (req, res) => {
   event.desc = req.body.content.desc
   event.date = req.body.content.date
   event.rsvp = req.body.content.rsvp
+  event.rsvpSent = req.body.content.rsvpSent
   event.donate = req.body.content.donate
   event.fundraiser = req.body.content.fundraiser
   event.product = req.body.content.product

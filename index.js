@@ -1,5 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const schedule = require('node-schedule')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')(session)
 const settings = require('./config/settings.json')
@@ -12,6 +13,7 @@ const productRoutes = require('./API/productRoutes')
 const eventRoutes = require('./API/eventRoutes')
 const mailRoutes = require('./API/mailRoutes')
 const loginRoutes = require('./API/loginRoutes')
+const mailListCheck = require('./mail/schedule')
 
 connectToDb()
 
@@ -38,6 +40,15 @@ app.use(userRoutes,
   mailRoutes,
   loginRoutes
 )
+
+/**
+ * Run email check every day at 10:00
+ */
+let dailyCheck =  schedule.scheduleJob('10 26 15 * * *', function(){
+  mailListCheck()
+});
+
+mailListCheck()
 
 app.listen(config.PORT, () => console.log(`Tojj Server is on port ${config.PORT}`))
 

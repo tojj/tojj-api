@@ -12,13 +12,14 @@ let eventSchema = new Schema({
   desc:       { type: String, required: true },
   date:       Number,
   rsvp:       Number,
+  rsvpSent:   Boolean,
   location: { 
     street:   { type: String, required: true },
     zipcode:  { type: String, required: true },
     city:     { type: String, required: true }
   },
   swish: {
-    number:   { type: Number },
+    number:   { type: String },
     amount:   { type: String },
   },
   donate:     { type: Boolean },
