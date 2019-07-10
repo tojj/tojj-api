@@ -13,7 +13,7 @@ const productRoutes = require('./API/productRoutes')
 const eventRoutes = require('./API/eventRoutes')
 const mailRoutes = require('./API/mailRoutes')
 const loginRoutes = require('./API/loginRoutes')
-const mailListCheck = require('./mail/schedule')
+const dailyCheck = require('./mail/schedule')
 
 connectToDb()
 
@@ -42,13 +42,18 @@ app.use(userRoutes,
 )
 
 /**
- * Run email check every day at 10:00
+ * Run email check every day at 11:00
  */
-let dailyCheck =  schedule.scheduleJob('10 26 15 * * *', function(){
-  mailListCheck()
+let scheduledCheck =  schedule.scheduleJob('0 0 11 * * *', function(){
+  dailyCheck()
 });
 
-mailListCheck()
+/**
+ * Run email check every day at 13:00
+ */
+let scheduledCheck2 =  schedule.scheduleJob('0 0 13 * * *', function(){
+  dailyCheck()
+});
 
 app.listen(config.PORT, () => console.log(`Tojj Server is on port ${config.PORT}`))
 
