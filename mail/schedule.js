@@ -66,7 +66,8 @@ function decideContentAndSend(events) {
       <div style="padding: 30px 50px 50px; text-align: center; background: #fff; max-width: 600px; margin: 0 auto 15px; box-shadow: 0 0 5px 0px rgba(0,0,0,0.4)">
         <h1 style="font-weight: bold; color: #6C80C5; text-transform: uppercase">Kalaset för ${event.child} närmar sig! 🎁</h1>
         <p style="text-align: left; margin-bottom: 20px;">${message.detailed}</p>
-        <p style="margin-bottom: 50px">För att se vilka som har meddelat att de kommer, samt se eventuella kommentarer dessa har lämnat, t.ex. allergier, klicka på knappen nedan.</p>
+        <p style="margin-bottom: 20px">För att se vilka som har meddelat att de kommer, samt se eventuella kommentarer dessa har lämnat, t.ex. allergier, klicka på knappen nedan.</p>
+        <p style="margin-bottom: 50px">Vi hoppas att ${event.child} får ett fantastisk firande!</p>
         <a href=${"http//tojj.oddnode.se/bekraftelse/" + event.link} style="word-wrap: none; text-decoration: none; font-size: 16px; font-weight: bold; background: #6C80C5; color: #fff; padding: 15px 30px; border-radius: 100px; opacity: 0.8; margin: 20px 0">TILL KALASET</a>
       </div>
       <div style="padding: 20px 50px; background: #fff; max-width: 600px; margin: 0 auto; box-shadow: 0 0 5px 0px rgba(0,0,0,0.4)">
