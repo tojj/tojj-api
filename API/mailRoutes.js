@@ -20,6 +20,7 @@ router.post('/api/send', function (req, res, next) {
 
   const mailOptions = {
     from: `"Tojj" <info@tojj.se>`,
+    replyTo: 'tojjinfo@gmail.com',
     to: req.body.email,
     subject: req.body.subject,
     html: req.body.message

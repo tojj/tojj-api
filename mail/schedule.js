@@ -92,6 +92,7 @@ function decideContentAndSend(events) {
 
     const mailOptions = {
       from: `"Tojj" <info@tojj.se>`,
+      replyTo: 'tojjinfo@gmail.com',
       to: event.guestUser.email,
       subject: message.subject,
       html: emailTemplate
