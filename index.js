@@ -13,6 +13,8 @@ const productRoutes = require('./API/productRoutes')
 const eventRoutes = require('./API/eventRoutes')
 const mailRoutes = require('./API/mailRoutes')
 const loginRoutes = require('./API/loginRoutes')
+const siteRoutes = require('./API/siteRoutes')
+const subscriberRoutes = require('./API/subscriberRoutes')
 const dailyCheck = require('./mail/schedule')
 
 connectToDb()
@@ -38,7 +40,9 @@ app.use(userRoutes,
   productRoutes,
   eventRoutes,
   mailRoutes,
-  loginRoutes
+  loginRoutes,
+  siteRoutes,
+  subscriberRoutes
 )
 
 /**
